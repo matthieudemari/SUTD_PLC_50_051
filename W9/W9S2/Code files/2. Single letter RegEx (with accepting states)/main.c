@@ -3,34 +3,32 @@
 
 typedef enum {
     START_STATE,
-    ACCEPTING_STATE
+    VALID_STATE
 } State;
 
-int recognize_single_a(const char *input) {
+int recognize_contains_a(const char *input) {
     State state = START_STATE;
     for (size_t i = 0; i < strlen(input); i++) {
+		// State will change if and only if
+		// we are in START_STATE and see a character a
         char c = input[i];
-        switch (state) {
-            case START_STATE:
-                if (c == 'a') {
-                    state = ACCEPTING_STATE;
-                } else {
-                    return 0;
-                }
-                break;
-            case ACCEPTING_STATE:
-                return 0;
-        }
+        if (state == START_STATE && c == 'a') {
+			state = VALID_STATE;
+			return 1;
+		}
     }
-    return 1;
+    return 0;
 }
 
 int main() {
-    const char *input = "a";
-    if (recognize_single_a(input)) {
-        printf("The input string \"%s\" consists of the single letter 'a'.\n", input);
+    // Some test cases
+    //const char *input = "a";
+    const char *input = "ac";
+    //const char *input = "bc";
+    if (recognize_contains_a(input)) {
+        printf("The input string \"%s\" contains the letter 'a'.\n", input);
     } else {
-        printf("The input string \"%s\" does not consist of the single letter 'a'.\n", input);
+        printf("The input string \"%s\" does not contain the letter 'a'.\n", input);
     }
     return 0;
 }
