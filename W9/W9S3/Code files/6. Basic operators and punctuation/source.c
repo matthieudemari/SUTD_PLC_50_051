@@ -1,2 +1,2 @@
-int + / for while return;
-*- if;
+int + / for while return ;
+* - if ;

@@ -5,7 +5,7 @@
 #include <regex.h>
 
 
-// Update the TokenType enumeration to include TOKEN_END_OF_LINE
+// Update the TokenType enumeration
 typedef enum {
     TOKEN_KEYWORD,
     TOKEN_ADD,          // The '+' operator

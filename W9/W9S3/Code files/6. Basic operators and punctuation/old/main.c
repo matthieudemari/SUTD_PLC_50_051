@@ -5,16 +5,16 @@
 #include <regex.h>
 
 
-// Update the TokenType enumeration to include TOKEN_END_OF_LINE
+// Update the TokenType enumeration
 typedef enum {
     TOKEN_KEYWORD,
-    TOKEN_ADD,        // The '+' operator
-    TOKEN_SUBTRACT,   // The '-' operator
-    TOKEN_MULTIPLY,   // The '*' operator
-    TOKEN_DIVIDE,     // The '/' operator
-    TOKEN_LEFT_PAREN, // The '(' character
-    TOKEN_RIGHT_PAREN,// The ')' character
-    TOKEN_END_OF_LINE, // The ';' character
+    TOKEN_ADD,          // The '+' operator
+    TOKEN_SUBTRACT,     // The '-' operator
+    TOKEN_MULTIPLY,     // The '*' operator
+    TOKEN_DIVIDE,       // The '/' operator
+    TOKEN_LEFT_PAREN,   // The '(' character
+    TOKEN_RIGHT_PAREN,  // The ')' character
+    TOKEN_END_OF_LINE,  // The ';' character
     TOKEN_UNKNOWN
 } TokenType;
 
@@ -42,28 +42,6 @@ void free_token(Token *token) {
 }
 
 
-// Same read source code functions as before
-char* read_source_code(const char *filename) {
-    FILE *file = fopen(filename, "r");
-    if (file == NULL) {
-        fprintf(stderr, "Error opening file: %s\n", filename);
-        exit(EXIT_FAILURE);
-    }
-    fseek(file, 0, SEEK_END);  
-    long file_size = ftell(file);
-    rewind(file);
-    char *source_code = (char *)malloc((file_size + 1) * sizeof(char));
-    if (source_code == NULL) {
-        fprintf(stderr, "Error allocating memory for source code\n");
-        exit(EXIT_FAILURE);
-    }
-    size_t read_size = fread(source_code, sizeof(char), file_size, file);
-    source_code[read_size] = '\0';
-    fclose(file);
-    return source_code;
-}
-
-
 // Same function recognizing keywords using strcmp
 bool is_keyword_strcmp(const char *lexeme) {
     const char *keywords[] = {"int", "while", "for", "if", "return", NULL};
@@ -78,12 +56,13 @@ bool is_keyword_strcmp(const char *lexeme) {
 
 // Almost same main() as before
 int main() {
-    const char *filename = "source.c";
-    char *source_code = read_source_code(filename);
-    if (source_code == NULL) {
-        fprintf(stderr, "Error reading source code from '%s'\n", filename);
+    char *source_code = (char*) malloc(100*sizeof(char));
+    if(source_code == NULL)
+    {
+        printf("Memory allocation failed!");
         return 1;
     }
+    strcpy(source_code, "int + / for while return ;\n* - if ;");
 
     char *lexeme = strtok(source_code, " \t\n\r");
     while (lexeme != NULL) {
