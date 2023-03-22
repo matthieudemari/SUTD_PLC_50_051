@@ -58,9 +58,6 @@ int main() {
     for (int i = 0; i < n; i++) {
         // Update state for each possible input value
         update_state(&f, input[i]);
-        if (f.current_state == EVEN) {
-            break;
-        }
     }
     
     // Final display
