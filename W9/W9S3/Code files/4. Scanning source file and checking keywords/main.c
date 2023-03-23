@@ -79,7 +79,10 @@ int main() {
     }
 
     // Tokenize the source code into lexemes
+	// (Will be replaced by something more sophisticated later)
     char *lexeme = strtok(source_code, " \t\n\r");
+	
+	// Classify lexemes
     while (lexeme != NULL) {
         // Check if the lexeme is a keyword using is_keyword_strcmp()
         bool is_keyword = is_keyword_strcmp(lexeme);
