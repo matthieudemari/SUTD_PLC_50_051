@@ -84,6 +84,35 @@ char* read_source_code(const char *filename) {
 }
 
 
+// Will replace all line comments with whitespaces
+// Every time a // character is recognized, keep replacing
+// characters with whitespaces, until a \n character is seen,
+// indicating the end of the comment.
+// Note: Does not cover block comments.
+void remove_line_comments(char *source_code) {
+    size_t source_code_length = strlen(source_code);
+    bool in_comment = false;
+
+    for (size_t i = 0; i < source_code_length; ++i) {
+        if (source_code[i] == '/' && source_code[i + 1] == '/') {
+            in_comment = true;
+        }
+
+        if (in_comment && source_code[i] != '\n') {
+            source_code[i] = ' '; // Replace comment characters with white spaces.
+        } else {
+            in_comment = false;
+        }
+    }
+}
+
+
+// Remove block comments now!
+void remove_block_comments(char *source_code) {
+    printf("Hello! Modify me please!")
+}
+
+
 // Recognizing keywords using strcmp
 // Will now return the corresponding kewyord TokenType that has been
 // recognized in case of a match, or TOKEN_UNKNOWN otherwise.
@@ -243,8 +272,8 @@ bool is_identifier_regex(const char *lexeme) {
     return false;
 }
 
-// Tokenizer v1.3
-// Almost same thing as before
+// Tokenizer v1.1
+// Almost same main() as before
 int main() {
 	// Load source code from file 
     // For testing, will put code string in source_code string directly (simpler).
@@ -257,8 +286,12 @@ int main() {
         return 1;
     }
     */
-    char *source_code = strdup("int x =7 float 2.5e-1 char 'a' char* \"hello\"; \n"
-							   "while( for) if== return 1t0 +- @ * / & &&;");
+    char *source_code = strdup("int x =7 // comment\nfloat 2.5e-1 char 'a' char* \"hello\"; \n"
+                           "/* block \n comment */ while( for) if== return 1t0 +- @ * / & &&;");
+
+	// Discard comments
+	remove_line_comments(source_code);
+	remove_block_comments(source_code);
 
 	// Create tokens stream
     Token **token_stream = NULL;
