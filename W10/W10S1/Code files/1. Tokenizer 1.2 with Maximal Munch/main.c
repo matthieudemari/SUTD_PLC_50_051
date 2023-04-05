@@ -324,7 +324,7 @@ int main() {
 			// Show error message, unless we have a whitespace character or some sort
             if (source_code[current_position] != ' ' && source_code[current_position] != '\n' &&
                 source_code[current_position] != '\t' && source_code[current_position] != '\r') {
-                printf("Error: Unrecognized character '%c' at line %zu\n", source_code[current_position], current_position);
+                printf("Error: Unrecognized character '%c' at line %zu\n", source_code[current_position], current_line_number);
             }
             ++current_position;
         }
